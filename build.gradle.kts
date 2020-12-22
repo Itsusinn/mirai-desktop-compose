@@ -10,6 +10,8 @@ plugins {
 group = "io.gi.it"
 version = "1.0"
 
+val vertxVersion = "3.8.0"
+
 repositories {
    jcenter()
    mavenCentral()
@@ -17,9 +19,15 @@ repositories {
 }
 
 dependencies {
+   //vertx
+   implementation("io.vertx:vertx-core:$vertxVersion")
+   implementation("io.vertx:vertx-web:$vertxVersion")
+   implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
+   implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
+
+   implementation("net.mamoe:mirai-core:1.3.3")
    implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
    implementation(compose.desktop.currentOs)
-   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.4.2")
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 }
 

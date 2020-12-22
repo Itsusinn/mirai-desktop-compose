@@ -14,8 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.runBlocking
 
-fun MainWindow(): Unit = Window(
+fun mainWindow() = Window(
    size = IntSize(1600,1200),
    undecorated = true,
 ) {
@@ -29,7 +30,7 @@ fun MainWindow(): Unit = Window(
          Button(
             onClick = {
                text = "Hello, Desktop!"
-               LoginWindow()
+
             },
             modifier = Modifier
                .align(Alignment.CenterHorizontally)

@@ -19,57 +19,62 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import io.gi.it.mirai.desktop.MiraiApp
+import kotlinx.coroutines.runBlocking
 
-fun LoginWindow() = Window(
-//  title = "登录",
-   size = IntSize(800,600),
-   undecorated = true,
-) {
-   var account by remember { mutableStateOf("") }
-   var password by remember { mutableStateOf("") }
-   MaterialTheme {
-      Box(
-         modifier = Modifier.fillMaxSize()
-//            .background(color = Color(151,136,166,88))
-            .padding(10.dp)
-      ){
-         Column(
-            Modifier.fillMaxSize(),
-            Arrangement.spacedBy(5.dp),
-         ) {
-            Image(
-               bitmap = imageResource("44892049_p0.jpg"), // ImageBitmap
-               modifier = Modifier
-                  .size(400.dp,400.dp)
-                  .align(Alignment.CenterHorizontally)
-            )
-            TextField(
-               value = account,
-               onValueChange = { account = it },
-               label = { Text("Your Account") },
-               singleLine = true,
-               modifier = Modifier
-                  .align(Alignment.CenterHorizontally)
-            )
-            TextField(
-               value = password,
-               onValueChange = { password = it },
-               label = { Text("Your Password") },
-               singleLine = true,
-               modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Button(
-               onClick = {
-                  AppManager.focusedWindow?.close()
-               },
-               modifier = Modifier
-                  .align(Alignment.CenterHorizontally)
-                  .size(200.dp,60.dp)
+fun loginWindow() = runBlocking {
+   Window(title = "登录",
+      size = IntSize(800,600),
+      undecorated = true,
+   ) {
+      var account by remember { mutableStateOf("") }
+      var password by remember { mutableStateOf("") }
+      MaterialTheme {
+         Box(
+            modifier = Modifier.fillMaxSize()
+               .background(color = Color(151,136,166,88))
+               .padding(10.dp)
+         ){
+            Column(
+               Modifier.fillMaxSize(),
+               Arrangement.spacedBy(5.dp),
             ) {
-               Text("Login")
+               Image(
+                  bitmap = imageResource("login2.png"), // ImageBitmap
+                  modifier = Modifier
+                     .size(400.dp,400.dp)
+                     .align(Alignment.CenterHorizontally)
+               )
+               TextField(
+                  value = account,
+                  onValueChange = { account = it },
+                  label = { Text("Your Account") },
+                  singleLine = true,
+                  modifier = Modifier
+                     .align(Alignment.CenterHorizontally)
+               )
+               TextField(
+                  value = password,
+                  onValueChange = { password = it },
+                  label = { Text("Your Password") },
+                  singleLine = true,
+                  modifier = Modifier.align(Alignment.CenterHorizontally)
+               )
+               Button(
+                  onClick = {
+                     MiraiApp.loginBot(account, password)
+                     mainWindow()
+                     //AppManager.focusedWindow?.close()
+                  },
+                  modifier = Modifier
+                     .align(Alignment.CenterHorizontally)
+                     .size(180.dp,60.dp)
+               ) {
+                  Text("Login")
+               }
             }
          }
-      }
 
+      }
    }
 }
