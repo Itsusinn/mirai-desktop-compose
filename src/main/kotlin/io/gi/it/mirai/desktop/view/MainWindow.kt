@@ -1,8 +1,11 @@
+
 package io.gi.it.mirai.desktop.view
 
 import androidx.compose.desktop.AppManager
 import androidx.compose.desktop.Window
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,9 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.runBlocking
 
-fun mainWindow() = Window(
+fun MainWindow() = Window(
    size = IntSize(1600,1200),
    undecorated = true,
 ) {
@@ -30,7 +32,6 @@ fun mainWindow() = Window(
          Button(
             onClick = {
                text = "Hello, Desktop!"
-
             },
             modifier = Modifier
                .align(Alignment.CenterHorizontally)

@@ -10,7 +10,7 @@ plugins {
 group = "io.gi.it"
 version = "1.0"
 
-val vertxVersion = "3.8.0"
+val vertxVersion = "3.9.5"
 
 repositories {
    jcenter()
@@ -29,6 +29,8 @@ dependencies {
    implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
    implementation(compose.desktop.currentOs)
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+
+   implementation("org.slf4j:slf4j-jdk14:1.7.30")
 }
 
 tasks.withType<KotlinCompile> {
@@ -37,7 +39,7 @@ tasks.withType<KotlinCompile> {
 
 compose.desktop {
    application {
-      mainClass = "io.gi.it.mirai.desktop.MainKt"
+      mainClass = "io.gi.it.mirai.desktop.AppKt"
       nativeDistributions {
          targetFormats(
             TargetFormat.Dmg,

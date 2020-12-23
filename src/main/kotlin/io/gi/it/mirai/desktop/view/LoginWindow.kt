@@ -20,11 +20,10 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import io.gi.it.mirai.desktop.MiraiApp
-import kotlinx.coroutines.runBlocking
 
-fun loginWindow() = runBlocking {
+fun LoginWindow()  {
    Window(title = "登录",
-      size = IntSize(800,600),
+      size = IntSize(900,700),
       undecorated = true,
    ) {
       var account by remember { mutableStateOf("") }
@@ -37,7 +36,7 @@ fun loginWindow() = runBlocking {
          ){
             Column(
                Modifier.fillMaxSize(),
-               Arrangement.spacedBy(5.dp),
+               Arrangement.spacedBy(10.dp),
             ) {
                Image(
                   bitmap = imageResource("login2.png"), // ImageBitmap
@@ -60,21 +59,33 @@ fun loginWindow() = runBlocking {
                   singleLine = true,
                   modifier = Modifier.align(Alignment.CenterHorizontally)
                )
-               Button(
-                  onClick = {
-                     MiraiApp.loginBot(account, password)
-                     mainWindow()
-                     //AppManager.focusedWindow?.close()
-                  },
+               Spacer(modifier = Modifier.size(15.dp))
+               Row(
                   modifier = Modifier
                      .align(Alignment.CenterHorizontally)
-                     .size(180.dp,60.dp)
                ) {
-                  Text("Login")
+                  Button(
+                     onClick = {
+                        MiraiApp.loginBot(account, password)
+                        MainWindow()
+                        //AppManager.focusedWindow?.close()
+                     },
+                     modifier = Modifier.size(90.dp,60.dp)
+                  ) {
+                     Text("Login")
+                  }
+                  Spacer(modifier = Modifier.size(60.dp))
+                  Button(
+                     onClick = {
+                        AppManager.exit()
+                     },
+                     modifier = Modifier.size(90.dp,60.dp)
+                  ){
+                     Text("Cancel")
+                  }
                }
             }
          }
-
       }
    }
 }
