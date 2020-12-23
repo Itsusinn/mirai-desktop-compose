@@ -1,8 +1,10 @@
+
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+   java
    kotlin("jvm") version "1.4.21"
    id("org.jetbrains.compose") version "0.3.0-build135"
 }
@@ -29,7 +31,6 @@ dependencies {
    implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
    implementation(compose.desktop.currentOs)
    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-
    implementation("org.slf4j:slf4j-jdk14:1.7.30")
 }
 
@@ -39,7 +40,7 @@ tasks.withType<KotlinCompile> {
 
 compose.desktop {
    application {
-      mainClass = "io.gi.it.mirai.desktop.AppKt"
+      mainClass = "io.gi.it.mirai.desktop.App"
       nativeDistributions {
          targetFormats(
             TargetFormat.Dmg,

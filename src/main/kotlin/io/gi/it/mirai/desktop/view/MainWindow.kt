@@ -23,30 +23,22 @@ fun MainWindow() = Window(
    undecorated = true,
 ) {
    var text by remember { mutableStateOf("Hello, World!") }
-   MaterialTheme {
-      Column(
+
+   Column(
+      modifier = Modifier.fillMaxSize().padding(5.dp)
+   ) {
+
+      Button(
+         onClick = { text = "Hello, Desktop!" },
+         modifier = Modifier.align(Alignment.CenterHorizontally)
+      ) { Text(text) }
+
+      Button(
+         onClick = {
+            AppManager.focusedWindow?.close()
+         },
          modifier = Modifier
-            .fillMaxSize()
-            .padding(5.dp)
-      ) {
-         Button(
-            onClick = {
-               text = "Hello, Desktop!"
-            },
-            modifier = Modifier
-               .align(Alignment.CenterHorizontally)
-         ) {
-            Text(text)
-         }
-         Button(
-            onClick = {
-               AppManager.focusedWindow?.close()
-            },
-            modifier = Modifier
-               .align(Alignment.CenterHorizontally)
-         ){
-            Text("Exit")
-         }
-      }
+            .align(Alignment.CenterHorizontally)
+      ){ Text("Exit") }
    }
 }

@@ -6,11 +6,13 @@ import io.gi.it.mirai.desktop.event.eventloop.consumer
 import io.gi.it.mirai.desktop.event.eventloop.publish
 import io.gi.it.mirai.desktop.view.LoginWindow
 
-fun main(args: Array<String>){
-   consumer<OpenLoginWindow> {
-      println("run")
-      LoginWindow()
+object App{
+   @JvmStatic fun main(args: Array<String>){
+      consumer<OpenLoginWindow> {
+         LoginWindow()
+      }
+      publish(StartEvent)
+      publish(OpenLoginWindow)
    }
-   publish(StartEvent)
-   publish(OpenLoginWindow)
 }
+
