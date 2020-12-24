@@ -19,7 +19,7 @@ object MiraiApp:CoroutineScope{
       }
    }
 
-   fun loginBot(account:String, password:String) = launch {
+   private fun doLoginBot(account:String, password:String) = launch {
       val newBot = Bot(account.toLong(),password){
          fileBasedDeviceInfo("device.json")
          networkLoggerSupplier = { SilentLogger }

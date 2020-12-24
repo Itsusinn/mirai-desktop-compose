@@ -17,8 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import net.mamoe.mirai.Bot
 
-fun MainWindow() = Window(
+fun MainWindow(bot:Bot) = MiraiWindow(
    size = IntSize(1600,1200),
    undecorated = true,
 ) {

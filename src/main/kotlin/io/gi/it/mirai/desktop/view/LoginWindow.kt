@@ -16,9 +16,10 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import io.gi.it.mirai.desktop.MiraiApp
+import io.gi.it.mirai.desktop.event.LoginEvent
+import io.gi.it.mirai.desktop.event.eventloop.publish
 
-
-fun LoginWindow() = Window(
+fun LoginWindow() = MiraiWindow(
    title = "登录",
    size = IntSize(900,700),
    undecorated = true,
@@ -61,18 +62,14 @@ fun LoginWindow() = Window(
          Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
          ) {
-
             Button(
                onClick = {
-                  MiraiApp.loginBot(account, password)
-                  MainWindow()
-                  //AppManager.focusedWindow?.close()
+                  publish(LoginEvent(account.toLong(),password))
+
                },
                modifier = Modifier.size(90.dp,60.dp)
             ) { Text("Login") }
-
             Spacer(modifier = Modifier.size(60.dp))
-
             Button(
                onClick = {
                   AppManager.exit()
