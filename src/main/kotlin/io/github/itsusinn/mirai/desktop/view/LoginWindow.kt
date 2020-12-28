@@ -1,7 +1,5 @@
-package io.gi.it.mirai.desktop.view
+package io.github.itsusinn.mirai.desktop.view
 
-import androidx.compose.desktop.AppManager
-import androidx.compose.desktop.Window
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,11 +13,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import io.gi.it.mirai.desktop.MiraiApp
-import io.gi.it.mirai.desktop.event.LoginEvent
-import io.gi.it.mirai.desktop.event.eventloop.publish
+import io.github.itsusinn.mirai.desktop.event.ExitApp
+import io.github.itsusinn.mirai.desktop.event.LoginEvent
+import io.github.itsusinn.mirai.desktop.event.closeWindow
+import io.github.itsusinn.mirai.desktop.event.eventloop.publish
+import io.github.itsusinn.mirai.desktop.event.exitApp
+
+private const val Name = "LoginWindow"
 
 fun LoginWindow() = MiraiWindow(
+   name = Name,
    title = "登录",
    size = IntSize(900,700),
    undecorated = true,
@@ -40,7 +43,6 @@ fun LoginWindow() = MiraiWindow(
             modifier = Modifier.align(Alignment.CenterHorizontally)
                .size(400.dp,400.dp)
          )
-
          TextField(
             value = account,
             onValueChange = { account = it },
@@ -48,7 +50,6 @@ fun LoginWindow() = MiraiWindow(
             singleLine = true,
             modifier = Modifier.align(Alignment.CenterHorizontally)
          )
-
          TextField(
             value = password,
             onValueChange = { password = it },
@@ -56,26 +57,28 @@ fun LoginWindow() = MiraiWindow(
             singleLine = true,
             modifier = Modifier.align(Alignment.CenterHorizontally)
          )
-
          Spacer(modifier = Modifier.size(15.dp))
-
          Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
          ) {
             Button(
-               onClick = {
-                  publish(LoginEvent(account.toLong(),password))
+               modifier = Modifier.size(90.dp,60.dp),
+               onClick = { publish(LoginEvent(account,password)) },
 
-               },
-               modifier = Modifier.size(90.dp,60.dp)
             ) { Text("Login") }
             Spacer(modifier = Modifier.size(60.dp))
+
             Button(
-               onClick = {
-                  AppManager.exit()
-               },
-               modifier = Modifier.size(90.dp,60.dp)
+               modifier = Modifier.size(90.dp,60.dp),
+               onClick = { closeWindow(Name) },
             ){ Text("Cancel") }
+            Spacer(modifier = Modifier.size(60.dp))
+
+            Button(
+               modifier = Modifier.size(90.dp,60.dp),
+               onClick = { exitApp() },
+            ){ Text("Close") }
+
          }
       }
    }

@@ -1,13 +1,11 @@
-package io.gi.it.mirai.desktop.event.eventloop
+package io.github.itsusinn.mirai.desktop.event.eventloop
 
-import io.gi.it.mirai.desktop.event.Event
-import io.gi.it.mirai.desktop.event.LoginEvent
-import io.gi.it.mirai.desktop.event.OpenLoginWindow
-import io.gi.it.mirai.desktop.event.StartEvent
+import io.github.itsusinn.mirai.desktop.event.*
 import io.vertx.core.Vertx
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.eventbus.EventBus
 import io.vertx.core.eventbus.MessageCodec
+import io.vertx.kotlin.coroutines.receiveChannelHandler
 import kotlin.reflect.jvm.jvmName
 
 object EventLoop{
@@ -19,15 +17,16 @@ object EventLoop{
 }
 
 fun EventBus.registerLocalCodec(){
-   this
-      .registerDefaultCodec(StartEvent::class.java, LocalMessageCodec<StartEvent>())
-      .registerDefaultCodec(OpenLoginWindow::class.java, LocalMessageCodec<OpenLoginWindow>())
-      .registerDefaultCodec(LoginEvent::class.java, LocalMessageCodec<LoginEvent>())
-
+   registerDefaultCodec(StartEvent::class.java, LocalMessageCodec())
+   registerDefaultCodec(OpenLoginWindow::class.java, LocalMessageCodec())
+   registerDefaultCodec(LoginEvent::class.java, LocalMessageCodec())
+   registerDefaultCodec(OnWindowCreated::class.java, LocalMessageCodec())
+   registerDefaultCodec(CloseWindow::class.java, LocalMessageCodec())
+   registerDefaultCodec(ExitApp::class.java, LocalMessageCodec())
 }
 
 inline fun <reified T> LocalMessageCodec(): MessageCodec<T, T> where T: Event = object : MessageCodec<T, T> {
-   val name by lazy { "${T::class.jvmName}Codec" }
+   val name = "${T::class.jvmName}Codec"
    override fun transform(s: T): T = s
    override fun name(): String = name
    override fun systemCodecID(): Byte = -1

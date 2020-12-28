@@ -23,7 +23,6 @@ repositories {
 dependencies {
    //vertx
    implementation("io.vertx:vertx-core:$vertxVersion")
-   implementation("io.vertx:vertx-web:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
    implementation("io.vertx:vertx-lang-kotlin:$vertxVersion")
 

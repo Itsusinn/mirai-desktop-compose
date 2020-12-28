@@ -1,4 +1,4 @@
-package io.gi.it.mirai.desktop.view
+package io.github.itsusinn.mirai.desktop.view
 
 import androidx.compose.desktop.AppWindow
 import androidx.compose.desktop.WindowEvents
@@ -7,10 +7,13 @@ import androidx.compose.runtime.emptyContent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.window.MenuBar
+import io.github.itsusinn.mirai.desktop.event.OnWindowCreated
+import io.github.itsusinn.mirai.desktop.event.eventloop.publish
 import java.awt.image.BufferedImage
 import javax.swing.SwingUtilities
 
 fun MiraiWindow(
+   name:String,
    title: String = "JetpackDesktopWindow",
    size: IntSize = IntSize(800, 600),
    location: IntOffset = IntOffset.Zero,
@@ -20,7 +23,6 @@ fun MiraiWindow(
    undecorated: Boolean = false,
    events: WindowEvents = WindowEvents(),
    onDismissRequest: (() -> Unit)? = null,
-   onWindowInstance: ((AppWindow) -> Unit)? = null,
    content: @Composable () -> Unit = emptyContent()
 ){
    SwingUtilities.invokeLater {
@@ -34,10 +36,8 @@ fun MiraiWindow(
          undecorated = undecorated,
          events = events,
          onDismissRequest = onDismissRequest
-      ).also {
-         if (onWindowInstance != null) {
-            onWindowInstance(it)
-         }
+      ).also { window ->
+         publish(OnWindowCreated(name,window),"window")
       }.show {
          content()
       }

@@ -1,13 +1,10 @@
 
-package io.gi.it.mirai.desktop.view
+package io.github.itsusinn.mirai.desktop.view
 
-import androidx.compose.desktop.AppManager
-import androidx.compose.desktop.Window
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,9 +14,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import io.github.itsusinn.mirai.desktop.event.CloseWindow
+import io.github.itsusinn.mirai.desktop.event.eventloop.publish
 import net.mamoe.mirai.Bot
 
-fun MainWindow(bot:Bot) = MiraiWindow(
+private const val Name = "MainWindow"
+
+fun MainWindow(bot:Bot? = null) = MiraiWindow(
+   name = Name,
+   title = "MainWindow",
    size = IntSize(1600,1200),
    undecorated = true,
 ) {
@@ -35,9 +38,7 @@ fun MainWindow(bot:Bot) = MiraiWindow(
       ) { Text(text) }
 
       Button(
-         onClick = {
-            AppManager.focusedWindow?.close()
-         },
+         onClick = { publish(CloseWindow(Name),"window") },
          modifier = Modifier
             .align(Alignment.CenterHorizontally)
       ){ Text("Exit") }
