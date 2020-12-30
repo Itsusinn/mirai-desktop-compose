@@ -9,12 +9,8 @@ import io.vertx.core.eventbus.MessageProducer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
-
-object DefaultCoroutineScope:CoroutineScope{
-   override val coroutineContext: CoroutineContext
-      get() = GlobalScope.coroutineContext
-}
 
 inline fun <reified T> publish(
    message:T,
@@ -31,8 +27,8 @@ inline fun <reified T> send(
 }
 
 inline fun <reified T> publisher(
-   address: String = "default")
-: MessageProducer<T> where T: Event {
+   address: String = "default"
+): MessageProducer<T> where T: Event {
    return eventBus.publisher<T>(address)
 }
 
@@ -47,12 +43,12 @@ inline fun <reified T> consumer(
 }
 
 //A constant consumer with handler
-inline fun <reified T> suspendingConsumer(
+inline fun <reified T> suspendConsumer(
    address: String = "default",
    noinline handler: suspend (Message<T>) -> Unit
 ): MessageConsumer<T> where T: Event {
    return eventBus.consumer<T>(address){
-      DefaultCoroutineScope.launch {
+      runBlocking {
          if (it.body() is T) handler(it)
       }
    }
@@ -66,7 +62,7 @@ inline fun <reified T> consumer(
    return eventBus.consumer<T>(address)
 }
 //A auto-unregistered consumer with handler
-inline fun <reified T> consume(
+inline fun <reified T> onetimeConsumer(
    address: String = "default",
    noinline handler: (Message<T>) -> Unit
 ): MessageConsumer<T> where T: Event {

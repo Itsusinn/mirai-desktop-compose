@@ -1,10 +1,11 @@
 package io.github.itsusinn.mirai.desktop
 
 import io.github.itsusinn.mirai.desktop.event.LoginEvent
-import io.github.itsusinn.mirai.desktop.event.eventloop.consumer
-import io.github.itsusinn.mirai.desktop.event.eventloop.suspendingConsumer
+import io.github.itsusinn.mirai.desktop.event.OnWindowCreated
+import io.github.itsusinn.mirai.desktop.event.closeWindow
+import io.github.itsusinn.mirai.desktop.event.eventloop.onetimeConsumer
+import io.github.itsusinn.mirai.desktop.event.eventloop.suspendConsumer
 import io.github.itsusinn.mirai.desktop.view.MainWindow
-import io.vertx.kotlin.coroutines.awaitBlocking
 import kotlinx.coroutines.*
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.utils.SilentLogger
@@ -12,18 +13,25 @@ import kotlin.coroutines.CoroutineContext
 
 object MiraiApp:CoroutineScope{
    private val BotList = ArrayList<Bot>()
-   private val botInstance by lazy { BotList.firstOrNull() }
+   private val botInstance by lazy { BotList.first() }
 
    init {
-      suspendingConsumer<LoginEvent> {
+      suspendConsumer<LoginEvent> {
          val event = it.body()
-         try {
-            doLoginBot(event.account,event.password)
-         }catch (e:Exception){
-            e.printStackTrace()
-            return@suspendingConsumer
+         launch {
+            try {
+               doLoginBot(event.account,event.password)
+            }catch (e:Exception){
+               e.printStackTrace()
+               return@launch
+            }
+            MainWindow(botInstance)
+            onetimeConsumer<OnWindowCreated>("window"){
+               if (it.body().name == "MainWindow"){
+                  closeWindow("LoginWindow")
+               }
+            }
          }
-         MainWindow(botInstance)
       }
    }
    private suspend fun doLoginBot(account:String, password:String)  {
@@ -32,7 +40,7 @@ object MiraiApp:CoroutineScope{
          networkLoggerSupplier = { SilentLogger }
       }
       newBot.login()
-      BotList + newBot
+      BotList.add(newBot)
    }
 
    override val coroutineContext: CoroutineContext

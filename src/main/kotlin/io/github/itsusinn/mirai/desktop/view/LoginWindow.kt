@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
@@ -27,7 +28,7 @@ fun LoginWindow() = MiraiWindow(
    size = IntSize(900,700),
    undecorated = true,
 ) {
-   var account by remember { mutableStateOf("") }
+   var account by remember { mutableStateOf("1802657638") }
    var password by remember { mutableStateOf("") }
    Box(
       modifier = Modifier.fillMaxSize()
@@ -64,16 +65,13 @@ fun LoginWindow() = MiraiWindow(
             Button(
                modifier = Modifier.size(90.dp,60.dp),
                onClick = { publish(LoginEvent(account,password)) },
-
             ) { Text("Login") }
             Spacer(modifier = Modifier.size(60.dp))
-
             Button(
                modifier = Modifier.size(90.dp,60.dp),
                onClick = { closeWindow(Name) },
             ){ Text("Cancel") }
             Spacer(modifier = Modifier.size(60.dp))
-
             Button(
                modifier = Modifier.size(90.dp,60.dp),
                onClick = { exitApp() },

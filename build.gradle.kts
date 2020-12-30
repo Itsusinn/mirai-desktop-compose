@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
    java
    kotlin("jvm") version "1.4.21"
-   id("org.jetbrains.compose") version "0.3.0-build135"
+   id("org.jetbrains.compose") version "0.3.0-build138"
 }
 
 group = "io.gi.it"
@@ -39,7 +39,7 @@ tasks.withType<KotlinCompile> {
 
 compose.desktop {
    application {
-      mainClass = "io.gi.it.mirai.desktop.App"
+      mainClass = "io.github.itsusinn.mirai.desktop.App"
       nativeDistributions {
          targetFormats(
             TargetFormat.Dmg,

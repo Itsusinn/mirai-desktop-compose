@@ -6,14 +6,13 @@ import io.github.itsusinn.mirai.desktop.event.*
 import io.github.itsusinn.mirai.desktop.event.eventloop.consumer
 import io.github.itsusinn.mirai.desktop.event.eventloop.publish
 import io.github.itsusinn.mirai.desktop.view.LoginWindow
-import kotlinx.coroutines.runBlocking
 
 object App{
    private val windows = HashMap<String,AppWindow>()
+   //to make init code block work
    private val miraiApp = MiraiApp
    init {
       consumer<OnWindowCreated>("window"){
-
          val event = it.body()
          try {
             addWindow(event.name,event.window)
